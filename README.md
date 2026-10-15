@@ -1,38 +1,8 @@
-# Project Title
+# Maryland Nonprofits (MANO) County Ecosystem Map
 
-A brief, one-to-two sentence description explaining what this project does and what problem it solves.
+This repository contains an interactive, embeddable CMS plugin featuring a true-to-life D3.js map of Maryland's 24 counties. It dynamically links IRS nonprofit data, membership counts, and regional tier analytics.
 
 ## Features
-- Feature 1: High performance data processing.
-- Feature 2: Clean, modular architecture.
-
-## Installation
-
-Provide step-by-step instructions to get the development environment running locally.
-
-```bash
-# Clone the repository
-git clone https://github.com
-
-# Navigate into the project folder
-cd project-name
-
-# Install dependencies
-npm install  # or pip install -r requirements.txt
-```
-
-## Usage
-
-Show a brief example of how to run or use the project.
-
-```python
-# Example command or basic code usage
-import project
-project.start()
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-[MIT](https://choosealicense.com)
+- True-to-life geographic boundaries of Maryland counties.
+- Dynamic county breakdown cards displaying active members, lapsed members, and anchor organizations.
+- Fully self-contained JavaScript and CSS for easy CMS embedding.
