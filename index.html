@@ -206,82 +206,71 @@
       const projection = d3.geoMercator();
       const pathGenerator = d3.geoPath().projection(projection);
 
-      // Embedded lightweight TopoJSON/GeoJSON feature collection for Maryland Counties to guarantee zero external request failures
-      const mdGeoData = {
-        "type": "FeatureCollection",
-        "features": [
-          { "type": "Feature", "properties": { "NAME": "Garrett County" }, "geometry": { "type": "Polygon", "coordinates": [[[-79.48,39.72],[-79.15,39.72],[-79.16,39.19],[-79.48,39.45],[-79.48,39.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "Allegany County" }, "geometry": { "type": "Polygon", "coordinates": [[[-79.15,39.72],[-78.78,39.70],[-78.47,39.55],[-78.75,39.43],[-79.16,39.19],[-79.15,39.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "Washington County" }, "geometry": { "type": "Polygon", "coordinates": [[[-78.78,39.70],[-77.72,39.72],[-77.58,39.32],[-78.47,39.55],[-78.78,39.70]]] } },
-          { "type": "Feature", "properties": { "NAME": "Frederick County" }, "geometry": { "type": "Polygon", "coordinates": [[[-77.72,39.72],[-77.16,39.72],[-77.20,39.12],[-77.58,39.32],[-77.72,39.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "Carroll County" }, "geometry": { "type": "Polygon", "coordinates": [[[-77.16,39.72],[-76.70,39.72],[-76.85,39.32],[-77.20,39.12],[-77.16,39.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "Baltimore County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.70,39.72],[-76.25,39.68],[-76.35,39.25],[-76.85,39.32],[-76.70,39.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "Harford County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.25,39.68],[-75.98,39.65],[-76.08,39.35],[-76.35,39.25],[-76.25,39.68]]] } },
-          { "type": "Feature", "properties": { "NAME": "Cecil County" }, "geometry": { "type": "Polygon", "coordinates": [[[-75.98,39.65],[-75.78,39.72],[-75.78,39.35],[-76.08,39.35],[-75.98,39.65]]] } },
-          { "type": "Feature", "properties": { "NAME": "Kent County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.15,39.38],[-75.80,39.38],[-76.00,39.12],[-76.15,39.38]]] } },
-          { "type": "Feature", "properties": { "NAME": "Queen Anne's County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.25,39.18],[-75.90,39.18],[-76.08,38.88],[-76.25,39.18]]] } },
-          { "type": "Feature", "properties": { "NAME": "Talbot County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.35,38.85],[-76.02,38.85],[-76.20,38.65],[-76.35,38.85]]] } },
-          { "type": "Feature", "properties": { "NAME": "Caroline County" }, "geometry": { "type": "Polygon", "coordinates": [[[-75.92,39.05],[-75.72,39.05],[-75.75,38.78],[-75.92,38.78],[-75.92,39.05]]] } },
-          { "type": "Feature", "properties": { "NAME": "Dorchester County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.32,38.65],[-75.80,38.65],[-76.02,38.35],[-76.32,38.65]]] } },
-          { "type": "Feature", "properties": { "NAME": "Wicomico County" }, "geometry": { "type": "Polygon", "coordinates": [[[-75.85,38.52],[-75.45,38.52],[-75.52,38.28],[-75.85,38.28],[-75.85,38.52]]] } },
-          { "type": "Feature", "properties": { "NAME": "Somerset County" }, "geometry": { "type": "Polygon", "coordinates": [[[-75.92,38.25],[-75.68,38.25],[-75.72,37.95],[-75.92,37.95],[-75.92,38.25]]] } },
-          { "type": "Feature", "properties": { "NAME": "Worcester County" }, "geometry": { "type": "Polygon", "coordinates": [[[-75.58,38.48],[-75.05,38.48],[-75.12,38.02],[-75.58,38.02],[-75.58,38.48]]] } },
-          { "type": "Feature", "properties": { "NAME": "Montgomery County" }, "geometry": { "type": "Polygon", "coordinates": [[[-77.42,39.32],[-76.92,39.18],[-77.08,38.92],[-77.52,39.08],[-77.42,39.32]]] } },
-          { "type": "Feature", "properties": { "NAME": "Prince George's County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.92,39.18],[-76.68,38.98],[-76.88,38.55],[-77.08,38.92],[-76.92,39.18]]] } },
-          { "type": "Feature", "properties": { "NAME": "Howard County" }, "geometry": { "type": "Polygon", "coordinates": [[[-77.08,39.32],[-76.72,39.28],[-76.82,39.12],[-77.08,39.12],[-77.08,39.32]]] } },
-          { "type": "Feature", "properties": { "NAME": "Anne Arundel County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.72,39.28],[-76.38,39.15],[-76.48,38.78],[-76.82,38.92],[-76.72,39.28]]] } },
-          { "type": "Feature", "properties": { "NAME": "Calvert County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.68,38.72],[-76.42,38.72],[-76.42,38.35],[-76.68,38.35],[-76.68,38.72]]] } },
-          { "type": "Feature", "properties": { "NAME": "St. Mary's County" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.65,38.35],[-76.22,38.35],[-76.32,38.02],[-76.65,38.02],[-76.65,38.35]]] } },
-          { "type": "Feature", "properties": { "NAME": "Charles County" }, "geometry": { "type": "Polygon", "coordinates": [[[-77.22,38.65],[-76.68,38.65],[-76.92,38.32],[-77.22,38.32],[-77.22,38.65]]] } },
-          { "type": "Feature", "properties": { "NAME": "Baltimore City" }, "geometry": { "type": "Polygon", "coordinates": [[[-76.72,39.38],[-76.52,39.38],[-76.52,39.22],[-76.72,39.22],[-76.72,39.38]]] } }
-        ]
-      };
-
-      // Fit map projection precisely to svg container dimensions
-      projection.fitSize([width - 20, height - 20], mdGeoData);
-
-      const titleEl = document.getElementById("card-title");
-      const regionEl = document.getElementById("card-region");
-      const npEl = document.getElementById("stat-nonprofits");
-      const activeEl = document.getElementById("stat-active");
-      const lapsedEl = document.getElementById("stat-lapsed");
-      const anchorsEl = document.getElementById("stat-anchors");
-      const grassEl = document.getElementById("stat-grassroots");
-      const hsEl = document.getElementById("stat-humanservices");
-
-      svg.selectAll("path")
-        .data(mdGeoData.features)
-        .enter()
-        .append("path")
-        .attr("d", pathGenerator)
-        .attr("class", "county-path")
-        .on("click", function(event, d) {
-          svg.selectAll("path").classed("active", false);
-          d3.select(this).classed("active", true);
-
-          let rawName = d.properties.NAME || "County";
-          let countyName = rawName.replace(" County", "").trim();
-
-          const info = countyData[countyName] || {
-            region: "General Region",
-            np: "N/A", active: "N/A", lapsed: "N/A", anchors: "N/A", grassroots: "N/A", hs: "N/A"
-          };
-
-          titleEl.textContent = rawName;
-          regionEl.textContent = "Region / Tier: " + info.region;
-          npEl.textContent = info.np;
-          activeEl.textContent = info.active;
-          lapsedEl.textContent = info.lapsed;
-          anchorsEl.textContent = info.anchors;
-          grassEl.textContent = info.grassroots;
-          hsEl.textContent = info.hs;
+      // Load authoritative GeoJSON at runtime (raw GitHub URL)
+      // Replace the commit hash with whatever version you want, or point to a local path in production
+      const geojsonUrl = "https://raw.githubusercontent.com/frankrowe/maryland-geojson/efc6d0d8dbcf7d8727d3ddcfa43d4739d5cf4585/maryland-counties.geojson";
+      
+      fetch(geojsonUrl)
+        .then(res => {
+          if (!res.ok) throw new Error("Failed to fetch GeoJSON: " + res.status);
+          return res.json();
         })
-        .append("title")
-        .text(d => d.properties.NAME);
-
-      container.append("div")
-        .attr("class", "mano-instructions")
-        .text("Click any county on the map to inspect ecosystem statistics");
-    });
+        .then(mdGeoData => {
+          // Fit projection after the data is loaded
+          projection.fitSize([width - 20, height - 20], mdGeoData);
+      
+          // elements used to show stats (declare now, after projection is ready)
+          const titleEl = document.getElementById("card-title");
+          const regionEl = document.getElementById("card-region");
+          const npEl = document.getElementById("stat-nonprofits");
+          const activeEl = document.getElementById("stat-active");
+          const lapsedEl = document.getElementById("stat-lapsed");
+          const anchorsEl = document.getElementById("stat-anchors");
+          const grassEl = document.getElementById("stat-grassroots");
+          const hsEl = document.getElementById("stat-humanservices");
+      
+          // helper to read county name regardless of property casing ("name" vs "NAME")
+          function readName(props) {
+            return props.NAME || props.name || props.county || props.County || "County";
+          }
+      
+          svg.selectAll("path")
+            .data(mdGeoData.features)
+            .join("path")
+            .attr("d", pathGenerator)
+            .attr("class", "county-path")
+            .on("click", function(event, d) {
+              svg.selectAll("path").classed("active", false);
+              d3.select(this).classed("active", true);
+      
+              const rawName = readName(d.properties);
+              const countyName = rawName.replace(/\s*County$/i, "").trim();
+      
+              const info = countyData[countyName] || {
+                region: "General Region",
+                np: "N/A", active: "N/A", lapsed: "N/A", anchors: "N/A", grassroots: "N/A", hs: "N/A"
+              };
+      
+              titleEl.textContent = rawName;
+              regionEl.textContent = "Region / Tier: " + info.region;
+              npEl.textContent = info.np;
+              activeEl.textContent = info.active;
+              lapsedEl.textContent = info.lapsed;
+              anchorsEl.textContent = info.anchors;
+              grassEl.textContent = info.grassroots;
+              hsEl.textContent = info.hs;
+            })
+            .append("title")
+            .text(d => readName(d.properties));
+      
+          container.append("div")
+            .attr("class", "mano-instructions")
+            .text("Click any county on the map to inspect ecosystem statistics");
+        })
+        .catch(err => {
+          console.error("GeoJSON load/draw error:", err);
+          container.append("div").style("color","crimson")
+            .text("Failed to load county geometries — check console for details.");
+        });
   </script>
 </div>
